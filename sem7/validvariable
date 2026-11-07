@@ -1,0 +1,54 @@
+variable.l
+
+%{
+#include "y.tab.h"
+%}
+
+%%
+[a-zA-Z]  { return LETTER; }
+[0-9]     { return DIGIT; }
+\n        { return NL; }
+.         { return yytext[0]; }
+%%
+
+int yywrap()
+{
+    return 1;
+}
+
+
+
+
+
+
+
+variable.y
+
+%{
+#include <stdio.h>
+%}
+
+%token LETTER DIGIT NL
+
+%%
+start : LETTER rest NL  { printf("Valid variable\n"); }
+      ;
+
+rest  : LETTER rest
+      | DIGIT rest
+      | 
+      ;
+%%
+
+int main()
+{
+    printf("Enter a variable: ");
+    yyparse();
+    return 0;
+}
+
+int yyerror(char *s)
+{
+    printf("Invalid variable\n");
+    return 0;
+}
