@@ -13,7 +13,8 @@
 "!="                   { return NE; }
 "++"                   { return INC; }
 "--"                   { return DEC; }
-[\t\n]                 ;
+[\t].                   ;
+[\n]                    {return NL;}
 .                      { return yytext[0]; }
 %%
 
@@ -31,7 +32,7 @@ int yywrap()
 %token FOR ID NUMBER LE GE EQ NE INC DEC
 
 %%
-start : FOR '(' init ';' cond ';' updte ')'
+start : FOR '(' init ';' cond ';' updte ')' NL
         { printf("Valid FOR syntax\n"); }
       ;
 

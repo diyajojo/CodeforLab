@@ -6,7 +6,7 @@ variable.l
 
 %%
 [0-9]+      { yylval = atoi(yytext); return NUMBER; }
-[ \t]       ;
+[ \t]       {return NL;}
 \n          { return '\n'; }
 .           { return yytext[0]; }
 %%
@@ -31,7 +31,7 @@ int yyerror(char *s);
 
 %%
 input:
-    expression '\n' {printf("result =%d\n",$1);}
+    expression NL  {printf("result =%d\n",$1);}
     ;
 
 expression:
